@@ -35,5 +35,12 @@ window.CMS_PUBLISHED = {
  "c3_title": "특수아동교육",
  "c3_lead": "아이는 말썽을 부리는 게 아니라 말을 걸고 있습니다. 그 신호를 읽는 눈을 훈련합니다.",
  "c3_items": "아이의 행동을 문제가 아니라 신호로 읽는 법\n보호자와 교사 사이의 갈등을 대화로 바꾸기\n내일 교실에서 바로 써보는 현장 사례 실습",
- "c3_hours": "기관 맞춤 편성"
+ "c3_hours": "기관 맞춤 편성",
+ "act_gallery": "[{\"k\":\"cms_img_p1\",\"alt\":\"이미지메이킹 강의 현장\",\"date\":\"2026-01-01\"},{\"k\":\"cms_img_p2\",\"alt\":\"강점 기반 취업코칭 강의\",\"date\":\"2026-01-01\"},{\"k\":\"cms_img_p3\",\"alt\":\"면접 심사위원 활동\",\"date\":\"2026-01-01\"},{\"k\":\"cms_img_p4\",\"alt\":\"이미지메이킹 교육 현장\",\"date\":\"2026-01-01\"},{\"k\":\"cms_img_p5\",\"alt\":\"PBS 컬러강점 강연\",\"date\":\"2026-01-01\"},{\"k\":\"cms_img_p6\",\"alt\":\"병원코디네이터 양성과정 강의\",\"date\":\"2026-01-01\"}]",
+ "cms_img_p1": "assets/img/cms/p1.jpg",
+ "cms_img_p2": "assets/img/cms/p2.jpg",
+ "cms_img_p3": "assets/img/cms/p3.jpg",
+ "cms_img_p4": "assets/img/cms/p4.jpg",
+ "cms_img_p5": "assets/img/cms/p5.jpg",
+ "cms_img_p6": "assets/img/cms/p6.jpg"
 };
