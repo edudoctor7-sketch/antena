@@ -1893,9 +1893,10 @@ window.applySiteText();
 
           <div class="ad-card">
             <div class="ad-sec-t">① 구글시트 — <span style="color:var(--teal)">연결 완료</span></div>
-            <p class="ad-step"><b>후기는 구글시트에서 바로 읽어옵니다.</b> 시트에 후기를 적고 <b>「공개」 칸에 O</b> 를 넣으면,
-              홈페이지 새로고침만으로 그 후기가 화면에 나옵니다. 여기서 따로 하실 일은 없습니다.<br>
-              <span style="color:#6E7075">시트 칸 순서 — 접수일 · 이름 · 소속 · 별점 · 후기내용 · <b>공개</b> · 순서</span></p>
+            <p class="ad-step"><b>후기는 자동입니다.</b> 방문자가 [후기 남기기]로 적으면 구글시트에 바로 쌓이고,
+              홈페이지에도 바로 올라갑니다. 대표님이 하실 일은 없습니다.<br>
+              <b>내리고 싶은 후기가 있을 때만</b> 구글시트 「설문지 응답 시트1」 에서 그 줄을 지우시면 됩니다.
+              (지우기 싫으면 <b>F열에 X</b> 를 적어도 화면에서 빠집니다)</p>
             <p class="ad-step" style="margin-top:10px;color:#6E7075">아래 칸은 예전 방식(앱스스크립트)을 쓰실 때만 씁니다. 비워 두셔도 됩니다.</p>
             <div class="al-f"><label for="ad_sheet_url">구글시트 주소 (앱스스크립트 웹앱 URL)</label>
               <input id="ad_sheet_url" placeholder="https://script.google.com/macros/s/......../exec"></div>
@@ -1965,7 +1966,47 @@ window.AL = (function(){
      대표님 구글시트를 「파일 → 공유 → 웹에 게시(CSV)」 해둔 주소.
      홈페이지는 이 주소로 표를 통째로 받아와, 「공개」 칸이 O 인 줄만 화면에 띄운다.
      시트 자체는 방문자에게 보이지 않는다 — 창고 역할만 한다. */
-  var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCflMUBGtvoSX9-PabSBt34CutgzgZWZzCwAdtawTD5X67q4AVeVMKbr3enQsEPCL1JSLtjD7zDJ-e/pub?output=csv';
+  var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRCflMUBGtvoSX9-PabSBt34CutgzgZWZzCwAdtawTD5X67q4AVeVMKbr3enQsEPCL1JSLtjD7zDJ-e/pub?gid=2077544795&single=true&output=csv';
+  /* 방문자가 후기를 적는 구글 폼. 여기에 적은 내용이 위 시트로 바로 들어간다. */
+  /* 방문자가 아래 후기창에 적으면, 화면 전환 없이 이 구글 폼 주소로
+     조용히 전송되어 구글시트에 쌓인다. 방문자는 이 폼 화면을 보지 않는다. */
+  var FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSczkEo8LFZ6qjPosHYIdxXGDNDA4agHx5CHwY_69l7rqj8txA/formResponse';
+  var FORM_FIELDS = { name:'entry.1671605021', role:'entry.1928646292', star:'entry.891108313', text:'entry.1195972996' };
+
+  /* fetch 로 보내면 구글이 출처(Origin)를 보고 조용히 막는다.
+     숨은 iframe 에 실제 <form> 을 POST 시키는 방식은 일반 페이지 이동으로 보여서
+     구글 폼이 어느 사이트에서 보내든 그대로 받아 준다. (검증 완료) */
+  var formFrame = null, formEl = null;
+  function ensureFormRig(){
+    if (formEl) return;
+    formFrame = document.createElement('iframe');
+    formFrame.name = 'hiddenFormFrame';
+    formFrame.style.display = 'none';
+    document.body.appendChild(formFrame);
+    formEl = document.createElement('form');
+    formEl.action = FORM_ACTION;
+    formEl.method = 'POST';
+    formEl.target = 'hiddenFormFrame';
+    formEl.style.display = 'none';
+    Object.keys(FORM_FIELDS).forEach(function(k){
+      var inp = document.createElement('input');
+      inp.type = 'hidden'; inp.name = FORM_FIELDS[k];
+      inp.setAttribute('data-key', k);
+      formEl.appendChild(inp);
+    });
+    document.body.appendChild(formEl);
+  }
+  function submitToForm(fields){
+    return new Promise(function(resolve){
+      ensureFormRig();
+      Object.keys(fields).forEach(function(k){
+        var inp = formEl.querySelector('[data-key="' + k + '"]');
+        if (inp) inp.value = fields[k] == null ? '' : String(fields[k]);
+      });
+      formEl.submit();
+      setTimeout(function(){ resolve(true); }, 400);
+    });
+  }
 
   /* 쉼표로 나뉜 표를 줄·칸으로 푼다. 따옴표 안의 쉼표·줄바꿈까지 제대로 처리한다. */
   function parseCsv(text){
@@ -1989,21 +2030,28 @@ window.AL = (function(){
     return rows;
   }
 
-  /* 시트 한 줄 → 후기 하나.  칸 순서: 접수일 · 이름 · 소속 · 별점 · 후기내용 · 공개 · 순서 */
+  /* 구글 폼 응답 한 줄 → 후기 하나.
+     칸 순서: 타임스탬프 · 이름 · 소속 · 만족도 · 후기 내용 · (숨김)
+     후기를 적으면 바로 화면에 올라간다. 내리고 싶은 글은 시트에서 그 줄을 지우거나,
+     F열에 X 를 적으면 화면에서 빠진다. */
   function rowToReview(r, idx){
-    var pub = String(r[5] == null ? '' : r[5]).trim().toUpperCase();
-    if (pub !== 'O' && pub !== 'ㅇ' && pub !== 'TRUE' && pub !== 'Y') return null;
     var text = String(r[4] == null ? '' : r[4]).trim();
     if (!text) return null;
+    var hide = String(r[5] == null ? '' : r[5]).trim().toUpperCase();
+    if (hide === 'X' || hide === '숨김') return null;
+    var stamp = String(r[0] == null ? '' : r[0]).trim();
+    var date = '';
+    var m = stamp.match(/(\d{4})[.\-\/\s]+(\d{1,2})[.\-\/\s]+(\d{1,2})/);
+    if (m) date = m[1] + '-' + ('0'+m[2]).slice(-2) + '-' + ('0'+m[3]).slice(-2);
     return {
-      id: 'sheet' + idx,
-      date: String(r[0] == null ? '' : r[0]).trim().slice(0, 10),
+      id: 'form' + idx,
+      date: date,
       name: String(r[1] == null ? '' : r[1]).trim() || '익명',
       role: String(r[2] == null ? '' : r[2]).trim(),
       star: parseInt(r[3], 10) || 5,
       text: text,
       pub: true,
-      order: parseFloat(r[6]) || 999
+      order: -idx                     /* 최근에 쓴 후기가 위로 */
     };
   }
 
@@ -2149,6 +2197,13 @@ window.AL = (function(){
 
     /* 넷리파이 접수함에도 한 부 남겨 둔다 (실패해도 그냥 넘어간다) */
     netlifyPost('후기', {'이름':name, '소속':v('rv_role'), '별점':v('rv_star'), '후기내용':text});
+
+    /* 구글시트로 조용히 전송 — 성공하면 새로고침 없이 바로 화면에도 반영한다 */
+    submitToForm({ name:name, role:v('rv_role'), star:v('rv_star'), text:text }).then(function(){
+      D.reviews.unshift({ id:uid(), date:today(), name:name, role:v('rv_role'),
+        star:parseInt(v('rv_star'),10)||5, text:text, pub:true, order:-Date.now() });
+      renderMain();
+    });
 
     function fallbackMail(){
       var body = ['[홈페이지 후기 접수]','','이름 · 표기명: '+name,'소속 · 구분: '+(v('rv_role')||'-'),
