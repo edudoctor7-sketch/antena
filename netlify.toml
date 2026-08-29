@@ -9,6 +9,7 @@
 
 [build]
   publish = "site"
+  functions = "netlify/functions"
 
 [[headers]]
   for = "/*"
