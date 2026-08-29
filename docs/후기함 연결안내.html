@@ -1,0 +1,870 @@
+<meta charset="utf-8">
+<title>안테나랩 후기함 연결</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --paper:#FAFBFC;
+  --card:#FFFFFF;
+  --sunk:#F1F4F7;
+  --ink:#16283A;
+  --ink-2:#4A5B6C;
+  --ink-3:#5E6F84;
+  --navy:#1B3A5C;
+  --teal:#0A7276;
+  --teal-soft:#E4F3F3;
+  --warn:#A8501C;
+  --warn-soft:#FBF0E7;
+  --line:#DCE3EA;
+  --line-2:#EDF1F5;
+  --shadow:0 1px 2px rgba(22,40,58,.05), 0 8px 24px -12px rgba(22,40,58,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1720;
+    --card:#17212C;
+    --sunk:#1E2A37;
+    --ink:#E7EDF3;
+    --ink-2:#B3C1CF;
+    --ink-3:#9AACBE;
+    --navy:#9BBEE0;
+    --teal:#3FC4C7;
+    --teal-soft:#12333A;
+    --warn:#E9A272;
+    --warn-soft:#33241A;
+    --line:#2B3947;
+    --line-2:#222E3A;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1720;
+  --card:#17212C;
+  --sunk:#1E2A37;
+  --ink:#E7EDF3;
+  --ink-2:#B3C1CF;
+  --ink-3:#9AACBE;
+  --navy:#9BBEE0;
+  --teal:#3FC4C7;
+  --teal-soft:#12333A;
+  --warn:#E9A272;
+  --warn-soft:#33241A;
+  --line:#2B3947;
+  --line-2:#222E3A;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  font-weight:400;
+  line-height:1.78;
+  letter-spacing:-.01em;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 96px}
+
+/* ── 머리말 ─────────────────────────────── */
+.top{
+  border-bottom:1px solid var(--line);
+  background:var(--card);
+  margin-bottom:40px;
+}
+.top-in{max-width:760px;margin:0 auto;padding:44px 20px 36px}
+.eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.16em;
+  color:var(--teal);text-transform:uppercase;margin:0 0 14px;
+}
+h1{
+  font-family:"Gowun Batang","Apple SD Gothic Neo",serif;
+  font-size:clamp(29px,6vw,42px);
+  font-weight:700;line-height:1.3;letter-spacing:-.03em;
+  margin:0 0 16px;text-wrap:balance;
+}
+.sub{font-size:16.5px;color:var(--ink-2);margin:0;max-width:56ch}
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;
+}
+.chip{
+  font-size:13px;font-weight:500;padding:6px 13px;border-radius:999px;
+  background:var(--sunk);color:var(--ink-2);border:1px solid var(--line-2);
+}
+.chip.on{background:var(--teal-soft);color:var(--teal);border-color:transparent;font-weight:600}
+
+/* ── 공통 블록 ───────────────────────────── */
+h2{
+  font-family:"Gowun Batang","Apple SD Gothic Neo",serif;
+  font-size:24px;font-weight:700;letter-spacing:-.03em;line-height:1.4;
+  margin:0 0 12px;text-wrap:balance;
+}
+h3{font-size:16.5px;font-weight:600;margin:0 0 8px;letter-spacing:-.02em}
+p{margin:0 0 14px}
+p:last-child{margin-bottom:0}
+b,strong{font-weight:600}
+.hl{color:var(--teal);font-weight:600}
+a{color:var(--teal)}
+
+.note{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:22px 24px;box-shadow:var(--shadow);margin-bottom:22px;
+}
+.note.warn{background:var(--warn-soft);border-color:transparent}
+.note.warn h3{color:var(--warn)}
+.note-tag{
+  display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--warn);margin-bottom:8px;
+}
+
+/* ── 단계 ───────────────────────────────── */
+.steps{display:flex;flex-direction:column;gap:18px;margin:0;padding:0;list-style:none}
+.step{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.step-head{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:22px 24px 0;
+}
+.num{
+  flex:0 0 auto;width:36px;height:36px;border-radius:50%;
+  background:var(--navy);color:var(--card);
+  display:flex;align-items:center;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:500;
+  font-variant-numeric:tabular-nums;margin-top:2px;
+}
+.step[data-done="1"] .num{background:var(--teal)}
+.step[data-done="1"] .num::after{content:'✓';font-size:17px}
+.step[data-done="1"] .num span{display:none}
+.step-title{flex:1;min-width:0}
+.step-title h2{margin-bottom:4px}
+.step-why{font-size:14px;color:var(--ink-3);margin:0}
+.step-body{padding:16px 24px 24px 76px}
+@media (max-width:560px){ .step-body{padding-left:24px} }
+
+ol.do{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+ol.do>li{padding-left:4px}
+ul.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+
+.key{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:13.5px;
+  background:var(--sunk);border:1px solid var(--line);border-radius:6px;
+  padding:2px 8px;font-weight:500;white-space:nowrap;
+}
+.key.teal{background:var(--teal-soft);border-color:transparent;color:var(--teal)}
+/* 긴 주소는 폰 화면에서 줄이 바뀌어야 넘치지 않는다 */
+.key.url{white-space:normal;overflow-wrap:anywhere;font-size:12.5px;line-height:1.5}
+
+/* ── 화면 그림 ──────────────────────────── */
+.shot{
+  margin:18px 0 4px;border:1px solid var(--line);border-radius:10px;
+  overflow:hidden;background:var(--sunk);
+}
+.shot-bar{
+  display:flex;align-items:center;gap:6px;
+  padding:9px 12px;background:var(--card);border-bottom:1px solid var(--line);
+}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.shot-name{
+  font-size:11.5px;color:var(--ink-3);margin-left:8px;
+  font-family:"IBM Plex Mono",monospace;
+}
+.shot-in{padding:16px;font-size:13.5px;line-height:1.6}
+.menubar{
+  display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--ink-3);
+  border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px;
+}
+.menubar .pick{
+  color:var(--teal);font-weight:600;position:relative;
+}
+.menubar .pick::after{
+  content:'';position:absolute;left:-6px;right:-6px;top:-4px;bottom:-4px;
+  border:2px solid var(--teal);border-radius:6px;
+}
+.dropdown{
+  background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:6px;max-width:250px;box-shadow:var(--shadow);
+}
+.dropdown div{padding:7px 12px;border-radius:5px;font-size:13px;color:var(--ink-2)}
+.dropdown div.pick{background:var(--teal-soft);color:var(--teal);font-weight:600}
+
+.field{margin-bottom:12px}
+.field:last-child{margin-bottom:0}
+.field-l{font-size:12px;color:var(--ink-3);margin-bottom:5px;font-weight:500}
+.field-v{
+  background:var(--card);border:1px solid var(--line);border-radius:7px;
+  padding:9px 12px;font-size:13.5px;color:var(--ink-2);
+}
+.field-v.pick{border-color:var(--teal);border-width:2px;color:var(--teal);font-weight:600;background:var(--teal-soft)}
+
+.tag-must{
+  display:inline-block;font-size:11px;font-weight:600;color:var(--card);
+  background:var(--teal);border-radius:4px;padding:1px 7px;margin-left:6px;
+  letter-spacing:.02em;vertical-align:2px;
+}
+
+/* 경고 화면 흉내 */
+.scare{
+  background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px;
+}
+.scare-t{font-size:14px;font-weight:600;margin-bottom:6px}
+.scare-p{font-size:12.5px;color:var(--ink-3);margin-bottom:12px;line-height:1.55}
+.scare-link{font-size:13px;color:var(--teal);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* 표 */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:440px;color:var(--ink)}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-2);vertical-align:top}
+th{
+  font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.06em;
+  text-transform:uppercase;border-bottom:1px solid var(--line);
+}
+tr:last-child td{border-bottom:none}
+
+/* 코드 */
+.codebox{margin-top:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.code-top{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 14px;background:var(--sunk);border-bottom:1px solid var(--line);
+}
+.code-label{font-size:12.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.copy{
+  font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;
+  background:var(--teal);color:#fff;border:none;border-radius:7px;padding:7px 15px;
+  transition:opacity .15s;
+}
+.copy:hover{opacity:.85}
+.copy:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+pre{
+  margin:0;padding:14px;max-height:280px;overflow:auto;
+  background:var(--card);font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px;line-height:1.65;color:var(--ink-2);
+}
+
+/* 체크 */
+.check{
+  display:flex;align-items:flex-start;gap:11px;margin-top:18px;padding-top:16px;
+  border-top:1px solid var(--line-2);cursor:pointer;user-select:none;
+}
+.check input{
+  width:19px;height:19px;margin:3px 0 0;accent-color:var(--teal);cursor:pointer;flex:0 0 auto;
+}
+.check span{font-size:14.5px;color:var(--ink-2);font-weight:500}
+.step[data-done="1"] .check span{color:var(--teal)}
+
+/* 마무리 */
+.finish{
+  background:var(--navy);color:#fff;border-radius:14px;padding:30px 28px;margin-top:26px;
+}
+:root[data-theme="dark"] .finish,
+:root:not([data-theme="light"]) .finish{color:var(--paper)}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .finish{background:#1E3550;color:#EAF1F8}
+}
+.finish h2{color:inherit;margin-bottom:10px}
+.finish p{color:inherit;opacity:.88;font-size:15px}
+.finish .routine{
+  display:grid;gap:14px;margin-top:20px;
+}
+.routine-item{
+  background:rgba(255,255,255,.09);border-radius:10px;padding:16px 18px;
+}
+.routine-item h3{font-size:14.5px;margin-bottom:5px;color:inherit}
+.routine-item p{font-size:14px;margin:0;opacity:.85}
+
+section{margin-top:44px}
+.sec-head{margin-bottom:16px}
+.sec-head p{color:var(--ink-2);font-size:15px;margin-top:6px}
+hr{border:none;border-top:1px solid var(--line);margin:44px 0}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <p class="eyebrow">안테나랩 · antena.kr</p>
+    <h1>후기함 연결하기</h1>
+    <p class="sub">홈페이지에 남는 후기를 대표님 구글시트에 모으고, 고치신 글자가 다른 분들 화면에도 보이게 하는 준비입니다.</p>
+    <div class="meta">
+      <span class="chip on">약 10분</span>
+      <span class="chip">한 번만 하면 끝</span>
+      <span class="chip">컴퓨터로 하세요</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note warn">
+    <span class="note-tag">가장 먼저</span>
+    <h3>꼭 김근안 대표님 구글 계정으로 하세요</h3>
+    <p>여기서 만드는 시트에는 <b>방문자가 남긴 후기와 연락 사연</b>이 계속 쌓입니다. 새 후기 <b>알림 메일도 이 작업을 한 사람에게</b> 갑니다. 즉 <b>연결한 사람이 자료의 주인</b>이 됩니다.</p>
+    <p>그래서 다른 분 계정으로 하시면 안 됩니다. 시작하기 전에 크롬 오른쪽 위 프로필을 눌러 <span class="key">edudoctor7@gmail.com</span> 으로 로그인되어 있는지 확인해 주세요.</p>
+  </div>
+
+  <div class="note">
+    <h3>지금 상태</h3>
+    <p>넘겨드린 홈페이지 파일에는 <b>어떤 구글시트 주소도 들어 있지 않습니다.</b> 아래 순서대로 대표님이 만드신 주소를 넣으시면 그때 처음 연결됩니다.</p>
+    <p style="margin-top:12px;color:var(--ink-3);font-size:14.5px">이걸 안 하셔도 후기가 사라지지는 않습니다. 넷리파이 접수함에 따로 쌓이도록 해뒀습니다. 다만 <b>받은 후기를 홈페이지에 띄우거나, 고친 글자를 반영하려면</b> 이 연결이 필요합니다.</p>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>순서</h2>
+      <p>다섯 단계입니다. 한 번에 다 못 하셔도 괜찮습니다 — 아래 체크가 저장되니 나중에 이어서 하시면 됩니다.</p>
+    </div>
+
+    <ol class="steps">
+
+      <!-- 1 -->
+      <li class="step" id="s1">
+        <div class="step-head">
+          <div class="num"><span>1</span></div>
+          <div class="step-title">
+            <h2>구글시트 만들기</h2>
+            <p class="step-why">후기가 쌓일 창고를 하나 만듭니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li>크롬 주소창에 <span class="key">sheets.google.com</span> 을 칩니다.</li>
+            <li>왼쪽 위 <b>＋ 빈 스프레드시트</b>를 누릅니다.</li>
+            <li>왼쪽 맨 위 <b>제목 없는 스프레드시트</b>를 눌러 <span class="key teal">안테나랩 홈페이지</span> 로 바꿉니다.</li>
+          </ol>
+          <label class="check"><input type="checkbox" data-step="1"><span>시트를 만들었습니다</span></label>
+        </div>
+      </li>
+
+      <!-- 2 -->
+      <li class="step" id="s2">
+        <div class="step-head">
+          <div class="num"><span>2</span></div>
+          <div class="step-title">
+            <h2>코드 붙여넣기</h2>
+            <p class="step-why">시트가 홈페이지와 이야기할 수 있게 하는 부분입니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li>위쪽 메뉴에서 <b>확장 프로그램 → Apps Script</b> 를 누릅니다. 새 탭이 열립니다.</li>
+            <li>화면 가운데에 이미 적혀 있는 <span class="key url">function myFunction() { }</span> 를 <b>전부 지웁니다.</b></li>
+            <li>아래 코드를 <b>복사</b>해서 그 빈 자리에 <b>붙여넣습니다.</b></li>
+            <li>위쪽 <b>💾 저장</b> 아이콘을 누릅니다.</li>
+          </ol>
+
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">안테나랩 홈페이지 — Google Sheets</span></div>
+            <div class="shot-in">
+              <div class="menubar">
+                <span>파일</span><span>수정</span><span>보기</span><span>삽입</span><span>서식</span><span>데이터</span><span>도구</span><span class="pick">확장 프로그램</span><span>도움말</span>
+              </div>
+              <div class="dropdown">
+                <div>부가기능</div>
+                <div class="pick">Apps Script</div>
+                <div>AppSheet</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="codebox">
+            <div class="code-top">
+              <span class="code-label">Code.gs</span>
+              <button class="copy" id="copyBtn" type="button">코드 복사</button>
+            </div>
+            <pre id="codeText">/**
+ * 안테나랩 홈페이지 ↔ 구글시트 연결 (앱스스크립트)
+ *
+ * 하는 일 세 가지
+ *   1) 방문자가 남긴 후기를 「후기」 시트에 한 줄씩 쌓는다
+ *   2) 관리자가 고친 홈페이지 문구를 「설정」 시트에 저장한다
+ *   3) 홈페이지가 열릴 때 위 두 가지를 내려보내서, 모든 방문자가 같은 화면을 본다
+ *
+ * 설치 방법은 같은 폴더의 「구글시트 연결방법.md」 를 보세요.
+ */
+
+/* 관리자 비밀번호 — 홈페이지 관리자 로그인과 같은 번호여야 합니다. */
+var ADMIN_PW = &#x27;5822&#x27;;
+
+var SHEET_REVIEW = &#x27;후기&#x27;;
+var SHEET_CONFIG = &#x27;설정&#x27;;
+var HEADER = [&#x27;접수일시&#x27;, &#x27;이름&#x27;, &#x27;소속·구분&#x27;, &#x27;별점&#x27;, &#x27;후기내용&#x27;, &#x27;공개&#x27;, &#x27;표시순서&#x27;];
+
+/* ── 시트 준비 ───────────────────────────────────────── */
+function ss_() {
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
+
+function reviewSheet_() {
+  var ss = ss_();
+  var sh = ss.getSheetByName(SHEET_REVIEW);
+  if (!sh) {
+    sh = ss.insertSheet(SHEET_REVIEW);
+    sh.getRange(1, 1, 1, HEADER.length).setValues([HEADER]);
+    sh.getRange(1, 1, 1, HEADER.length).setFontWeight(&#x27;bold&#x27;).setBackground(&#x27;#E8F4F4&#x27;);
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(5, 420);
+  }
+  return sh;
+}
+
+function configSheet_() {
+  var ss = ss_();
+  var sh = ss.getSheetByName(SHEET_CONFIG);
+  if (!sh) {
+    sh = ss.insertSheet(SHEET_CONFIG);
+    sh.getRange(1, 1, 1, 2).setValues([[&#x27;항목&#x27;, &#x27;값&#x27;]]);
+    sh.getRange(1, 1, 1, 2).setFontWeight(&#x27;bold&#x27;).setBackground(&#x27;#E8F4F4&#x27;);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}
+
+/* 홈페이지 문구는 길어서 셀 한 칸(5만 자)을 넘을 수 있다.
+   그래서 4만 자씩 잘라 여러 줄에 나눠 담는다. */
+function saveConfig_(key, text) {
+  var sh = configSheet_();
+  var vals = sh.getDataRange().getValues();
+  for (var i = vals.length - 1; i &gt;= 1; i--) {
+    if (String(vals[i][0]).indexOf(key) === 0) sh.deleteRow(i + 1);
+  }
+  var s = String(text || &#x27;&#x27;);
+  var CHUNK = 40000;
+  var n = 0;
+  for (var p = 0; p &lt; s.length || n === 0; p += CHUNK) {
+    sh.appendRow([key + &#x27;#&#x27; + n, s.substr(p, CHUNK)]);
+    n++;
+  }
+}
+
+function readConfig_(key) {
+  var sh = configSheet_();
+  var vals = sh.getDataRange().getValues();
+  var parts = [];
+  for (var i = 1; i &lt; vals.length; i++) {
+    var k = String(vals[i][0]);
+    if (k.indexOf(key + &#x27;#&#x27;) === 0) {
+      parts.push({ n: parseInt(k.split(&#x27;#&#x27;)[1], 10) || 0, v: String(vals[i][1] || &#x27;&#x27;) });
+    }
+  }
+  parts.sort(function (a, b) { return a.n - b.n; });
+  return parts.map(function (x) { return x.v; }).join(&#x27;&#x27;);
+}
+
+/* ── 응답 도우미 ─────────────────────────────────────── */
+function out_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ── 홈페이지가 내용을 읽어갈 때 (GET) ──────────────────── */
+function doGet(e) {
+  try {
+    var type = (e &amp;&amp; e.parameter &amp;&amp; e.parameter.type) || &#x27;all&#x27;;
+
+    if (type === &#x27;ping&#x27;) {
+      return out_({ ok: true, sheet: ss_().getName() });
+    }
+
+    var reviews = [];
+    var sh = reviewSheet_();
+    var last = sh.getLastRow();
+    if (last &gt; 1) {
+      var rows = sh.getRange(2, 1, last - 1, HEADER.length).getValues();
+      rows.forEach(function (r, i) {
+        var pub = String(r[5]).trim();
+        if (pub !== &#x27;O&#x27; &amp;&amp; pub !== &#x27;o&#x27; &amp;&amp; pub !== &#x27;ㅇ&#x27; &amp;&amp; pub !== &#x27;TRUE&#x27; &amp;&amp; r[5] !== true) return;
+        reviews.push({
+          id: &#x27;sheet&#x27; + (i + 2),
+          date: formatDate_(r[0]),
+          name: String(r[1] || &#x27;익명&#x27;),
+          role: String(r[2] || &#x27;&#x27;),
+          star: parseInt(r[3], 10) || 5,
+          text: String(r[4] || &#x27;&#x27;),
+          pub: true,
+          order: Number(r[6]) || 0
+        });
+      });
+      reviews.sort(function (a, b) { return (a.order || 999) - (b.order || 999); });
+    }
+
+    var content = {};
+    try { content = JSON.parse(readConfig_(&#x27;content&#x27;) || &#x27;{}&#x27;); } catch (err) { content = {}; }
+
+    return out_({ ok: true, reviews: reviews, content: content });
+  } catch (err) {
+    return out_({ ok: false, error: String(err) });
+  }
+}
+
+function formatDate_(v) {
+  if (v instanceof Date) {
+    return Utilities.formatDate(v, &#x27;Asia/Seoul&#x27;, &#x27;yyyy-MM-dd&#x27;);
+  }
+  return String(v || &#x27;&#x27;).slice(0, 10);
+}
+
+/* ── 홈페이지가 내용을 보낼 때 (POST) ───────────────────── */
+function doPost(e) {
+  try {
+    var body = {};
+    try { body = JSON.parse(e.postData.contents); } catch (err) {
+      return out_({ ok: false, error: &#x27;보내온 내용을 읽지 못했습니다.&#x27; });
+    }
+
+    /* 1) 방문자 후기 접수 — 비밀번호 없이 누구나 */
+    if (body.type === &#x27;review&#x27;) {
+      var name = String(body.name || &#x27;&#x27;).trim();
+      var text = String(body.text || &#x27;&#x27;).trim();
+      if (!name || !text) return out_({ ok: false, error: &#x27;이름과 후기 내용이 필요합니다.&#x27; });
+      if (text.length &gt; 3000) return out_({ ok: false, error: &#x27;후기가 너무 깁니다.&#x27; });
+
+      reviewSheet_().appendRow([
+        new Date(),
+        name.slice(0, 60),
+        String(body.role || &#x27;&#x27;).slice(0, 80),
+        parseInt(body.star, 10) || 5,
+        text,
+        &#x27;&#x27;,          /* 공개 칸 — 대표님이 확인 후 O 를 넣으면 홈페이지에 올라갑니다 */
+        &#x27;&#x27;
+      ]);
+
+      notify_(name, body.role, body.star, text);
+      return out_({ ok: true });
+    }
+
+    /* 2) 관리자가 고친 내용을 웹에 반영 — 비밀번호 확인 */
+    if (body.type === &#x27;publish&#x27;) {
+      if (String(body.pw || &#x27;&#x27;) !== String(ADMIN_PW)) {
+        return out_({ ok: false, error: &#x27;비밀번호가 맞지 않습니다.&#x27; });
+      }
+      if (body.content &amp;&amp; typeof body.content === &#x27;object&#x27;) {
+        saveConfig_(&#x27;content&#x27;, JSON.stringify(body.content));
+      }
+      if (Array.isArray(body.reviews)) {
+        writeReviews_(body.reviews);
+      }
+      return out_({ ok: true, saved: new Date().toISOString() });
+    }
+
+    return out_({ ok: false, error: &#x27;알 수 없는 요청입니다.&#x27; });
+  } catch (err) {
+    return out_({ ok: false, error: String(err) });
+  }
+}
+
+/* 관리자 페이지에서 정리한 후기 목록을 시트에 그대로 옮겨 적는다. */
+function writeReviews_(list) {
+  var sh = reviewSheet_();
+  var last = sh.getLastRow();
+  if (last &gt; 1) sh.getRange(2, 1, last - 1, HEADER.length).clearContent();
+  if (!list.length) return;
+  var rows = list.map(function (r, i) {
+    return [
+      r.date || Utilities.formatDate(new Date(), &#x27;Asia/Seoul&#x27;, &#x27;yyyy-MM-dd&#x27;),
+      String(r.name || &#x27;익명&#x27;),
+      String(r.role || &#x27;&#x27;),
+      parseInt(r.star, 10) || 5,
+      String(r.text || &#x27;&#x27;),
+      (r.pub === false ? &#x27;&#x27; : &#x27;O&#x27;),
+      i + 1
+    ];
+  });
+  sh.getRange(2, 1, rows.length, HEADER.length).setValues(rows);
+}
+
+/* 새 후기가 들어오면 메일로 알려 준다. */
+function notify_(name, role, star, text) {
+  try {
+    var to = Session.getEffectiveUser().getEmail();
+    if (!to) return;
+    MailApp.sendEmail({
+      to: to,
+      subject: &#x27;[안테나랩 홈페이지] 새 후기 - &#x27; + name,
+      body: [
+        &#x27;홈페이지에 새 후기가 등록되었습니다.&#x27;,
+        &#x27;&#x27;,
+        &#x27;이름: &#x27; + name,
+        &#x27;소속: &#x27; + (role || &#x27;-&#x27;),
+        &#x27;별점: &#x27; + (star || 5),
+        &#x27;&#x27;,
+        &#x27;내용:&#x27;,
+        text,
+        &#x27;&#x27;,
+        &#x27;───────────────&#x27;,
+        &#x27;구글시트의 「후기」 탭을 열어 「공개」 칸에 O 를 넣으면 홈페이지에 올라갑니다.&#x27;,
+        ss_().getUrl()
+      ].join(&#x27;\n&#x27;)
+    });
+  } catch (err) {
+    /* 메일이 안 가도 후기 저장은 이미 끝났으므로 그냥 넘어간다 */
+  }
+}
+
+/* ── 처음 한 번 눌러서 시트를 만들어 두는 용도 ─────────────── */
+function 처음설정() {
+  reviewSheet_();
+  configSheet_();
+  SpreadsheetApp.getUi().alert(&#x27;「후기」와 「설정」 시트를 준비했습니다.&#x27;);
+}
+</pre>
+          </div>
+
+          <label class="check"><input type="checkbox" data-step="2"><span>코드를 붙여넣고 저장했습니다</span></label>
+        </div>
+      </li>
+
+      <!-- 3 -->
+      <li class="step" id="s3">
+        <div class="step-head">
+          <div class="num"><span>3</span></div>
+          <div class="step-title">
+            <h2>배포하기<span class="tag-must">가장 중요</span></h2>
+            <p class="step-why">여기서 나오는 주소가 홈페이지와 시트를 잇는 열쇠입니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li>오른쪽 위 파란 <b>배포 → 새 배포</b> 를 누릅니다.</li>
+            <li><b>유형 선택</b> 옆 <b>⚙️ 톱니바퀴</b>를 누르고 <b>웹 앱</b>을 고릅니다.</li>
+            <li>아래 두 칸을 <b>그림처럼</b> 맞춥니다. 특히 두 번째 칸을 꼭 바꿔주세요.</li>
+            <li><b>배포</b>를 누릅니다.</li>
+          </ol>
+
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">새 배포</span></div>
+            <div class="shot-in">
+              <div class="field">
+                <div class="field-l">설명</div>
+                <div class="field-v">홈페이지 연결 <span style="color:var(--ink-3)">(아무거나 적으셔도 됩니다)</span></div>
+              </div>
+              <div class="field">
+                <div class="field-l">다음 사용자로 실행</div>
+                <div class="field-v pick">나 (edudoctor7@gmail.com)</div>
+              </div>
+              <div class="field">
+                <div class="field-l">액세스 권한이 있는 사용자</div>
+                <div class="field-v pick">모든 사용자 ← 이걸 꼭 바꾸세요</div>
+              </div>
+            </div>
+          </div>
+
+          <p style="margin-top:18px"><b>그다음 무서운 화면이 하나 나옵니다.</b> 놀라지 마세요. 대표님이 직접 만드신 것이라 안전합니다.</p>
+
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">Google 로그인</span></div>
+            <div class="shot-in">
+              <div class="scare">
+                <div class="scare-t">Google에서 확인하지 않은 앱</div>
+                <div class="scare-p">이 앱은 아직 Google에서 확인하지 않았습니다. 신뢰할 수 있는 개발자가 만든 앱만 사용하세요.</div>
+                <div class="scare-link">고급 → 안테나랩 홈페이지(안전하지 않음)으로 이동</div>
+              </div>
+              <p style="font-size:13px;color:var(--ink-3);margin:12px 0 0">왼쪽 아래 <b>고급</b>을 누르면 아래에 이동 링크가 나옵니다. 그걸 누르고 <b>허용</b>까지 하시면 됩니다.</p>
+            </div>
+          </div>
+
+          <ol class="do" start="5" style="margin-top:18px">
+            <li>마지막에 나오는 <b>웹 앱 URL</b>을 <b>복사</b>합니다. <span class="key url">https://script.google.com/macros/s/……/exec</span> 모양입니다.</li>
+          </ol>
+          <p style="margin-top:12px;font-size:14.5px;color:var(--ink-3)">이 주소가 열쇠입니다. 창을 닫기 전에 꼭 복사해 두세요. (나중에 다시 볼 수도 있습니다 — <b>배포 → 배포 관리</b>)</p>
+
+          <label class="check"><input type="checkbox" data-step="3"><span>배포하고 주소를 복사했습니다</span></label>
+        </div>
+      </li>
+
+      <!-- 4 -->
+      <li class="step" id="s4">
+        <div class="step-head">
+          <div class="num"><span>4</span></div>
+          <div class="step-title">
+            <h2>홈페이지에 주소 넣기</h2>
+            <p class="step-why">복사한 열쇠를 홈페이지에 꽂아 넣습니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li>홈페이지 <span class="key">antena.kr</span> 을 열고 <b>맨 아래까지</b> 내려갑니다.</li>
+            <li>작은 <b>[관리자]</b> 단추를 누르고 비밀번호 <span class="key teal">5822</span> 를 넣습니다.</li>
+            <li>왼쪽 메뉴 <b>5번 홈페이지에 올리기</b>를 누릅니다.</li>
+            <li><b>① 구글시트 연결</b> 칸에 아까 복사한 주소를 붙여넣고 <b>[주소 저장]</b>.</li>
+            <li><b>[연결 확인]</b>을 눌러 <span class="hl">연결됐습니다!</span> 가 뜨면 끝입니다.</li>
+          </ol>
+
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">관리자 페이지 — 홈페이지에 올리기</span></div>
+            <div class="shot-in">
+              <div class="field">
+                <div class="field-l">① 구글시트 주소 (앱스스크립트 웹앱 URL)</div>
+                <div class="field-v pick">https://script.google.com/macros/s/AKfyc…/exec</div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+                <span class="key teal">주소 저장</span><span class="key">연결 확인</span>
+              </div>
+            </div>
+          </div>
+
+          <label class="check"><input type="checkbox" data-step="4"><span>「연결됐습니다!」를 봤습니다</span></label>
+        </div>
+      </li>
+
+      <!-- 5 -->
+      <li class="step" id="s5">
+        <div class="step-head">
+          <div class="num"><span>5</span></div>
+          <div class="step-title">
+            <h2>잘 되는지 확인</h2>
+            <p class="step-why">직접 후기를 하나 남겨서 시트에 들어오는지 봅니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li>홈페이지 <b>경력·후기</b> 칸의 <b>[후기 남기기]</b>를 눌러 아무 내용이나 하나 남깁니다.</li>
+            <li>구글시트로 돌아가 아래쪽 <b>「후기」</b> 탭을 엽니다. 한 줄이 새로 생겼을 겁니다.</li>
+            <li>그 줄의 <b>「공개」</b> 칸에 대문자 <span class="key teal">O</span> 를 넣습니다.</li>
+            <li>홈페이지를 새로고침하면 그 후기가 화면에 보입니다.</li>
+          </ol>
+
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">후기 탭</span></div>
+            <div class="shot-in tbl-wrap">
+              <table style="min-width:400px;font-size:12.5px">
+                <tr><th>접수일시</th><th>이름</th><th>후기내용</th><th>공개</th></tr>
+                <tr>
+                  <td>2026-08-29</td><td>김○○</td>
+                  <td style="color:var(--ink-3)">강의 듣고 자신감이 생겼습니다…</td>
+                  <td><span class="key teal">O</span></td>
+                </tr>
+              </table>
+              <p style="font-size:12.5px;color:var(--ink-3);margin:12px 0 0">올리기 싫은 후기는 <b>공개 칸을 비워두면</b> 홈페이지에 안 나옵니다.</p>
+            </div>
+          </div>
+
+          <label class="check"><input type="checkbox" data-step="5"><span>후기가 홈페이지에 뜨는 걸 확인했습니다</span></label>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <div class="finish">
+    <h2>다 되었습니다</h2>
+    <p>이제부터는 아래 두 가지만 기억하시면 됩니다.</p>
+    <div class="routine">
+      <div class="routine-item">
+        <h3>후기가 새로 들어왔을 때</h3>
+        <p>알림 메일이 옵니다. 구글시트 「후기」 탭을 열어, 홈페이지에 올리고 싶은 줄의 <b>공개 칸에 O</b>. 「표시순서」에 1, 2, 3을 넣으면 그 순서대로 나오고, 메인 화면에는 위에서 네 개까지 보입니다.</p>
+      </div>
+      <div class="routine-item">
+        <h3>홈페이지 글자를 고쳤을 때</h3>
+        <p>관리자 <b>1번 「글자 수정」</b>에서 고치고 <b>[저장하기]</b> → <b>5번 → ② [웹에 반영하기]</b>. 이 두 번째를 눌러야 다른 분들 화면에도 반영됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>막혔을 때</h2>
+      <p>거의 다 아래 다섯 가지 중 하나입니다.</p>
+    </div>
+    <div class="note" style="padding:8px 4px">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>이런 증상</th><th>이렇게 하세요</th></tr>
+          <tr>
+            <td><b>코드는 넣었는데 「연결 확인」이 안 됩니다</b></td>
+            <td>가장 흔한 경우입니다. <b>코드를 붙여넣기 전에 배포</b>했거나, 코드를 바꾼 뒤 <b>새 버전으로 다시 배포하지 않은</b> 것입니다. 앱스스크립트에서 <b>배포 → 배포 관리 → ✏️연필 → 버전: 새 버전 → 배포</b> 를 해주세요. <span style="color:var(--teal);font-weight:600">기존 배포를 고치는 것이라 주소는 그대로입니다.</span></td>
+          </tr>
+          <tr>
+            <td>「시트를 찾지 못했습니다」 라고 나옵니다</td>
+            <td>구글시트를 연 상태에서 <b>확장 프로그램 → Apps Script</b> 로 만들지 않고, script.google.com 에서 따로 만드신 경우입니다. 시트에서 다시 만드시거나, <span class="key">Code.gs</span> 맨 위 <span class="key">SHEET_ID</span> 에 시트 주소의 가운데 긴 글자를 넣고 새 버전으로 배포해 주세요.</td>
+          </tr>
+          <tr>
+            <td>「연결 확인」이 안 됩니다 (그 밖에)</td>
+            <td>3단계에서 <b>액세스 권한</b>을 <b>모든 사용자</b>로 안 바꾸신 경우가 대부분입니다. <b>배포 → 배포 관리 → 연필</b>에서 고칠 수 있습니다.</td>
+          </tr>
+          <tr>
+            <td>주소를 넣었는데 안 됩니다</td>
+            <td>주소가 <span class="key">/exec</span> 로 끝나야 합니다. <span class="key">/dev</span> 로 끝나면 안 됩니다.</td>
+          </tr>
+          <tr>
+            <td>후기를 남겼는데 시트에 없습니다</td>
+            <td>이름과 후기 내용을 <b>둘 다</b> 채우셨는지 봐주세요. 하나라도 비면 접수되지 않습니다.</td>
+          </tr>
+          <tr>
+            <td>시트에는 있는데 홈페이지에 안 뜹니다</td>
+            <td><b>공개 칸에 대문자 O</b>를 넣으셨는지 확인해 주세요. 소문자나 다른 글자는 안 됩니다.</td>
+          </tr>
+          <tr>
+            <td>코드를 고쳤는데 반영이 안 됩니다</td>
+            <td><b>배포 → 배포 관리 → 연필 → 버전: 새 버전 → 배포</b> 를 해야 반영됩니다.</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="note warn">
+      <span class="note-tag">한 가지 더</span>
+      <h3>구글 비밀번호를 바꿔주세요</h3>
+      <p>단체 카톡방에 구글 계정 비밀번호가 올라왔습니다. 여러 사람이 볼 수 있는 곳이니 바꾸시길 권해드립니다. <b>이 작업에는 비밀번호가 필요 없습니다</b> — 대표님이 직접 로그인해서 하시면 됩니다.</p>
+    </div>
+    <p style="font-size:14px;color:var(--ink-3);margin-top:20px">홈페이지 관리자 비밀번호는 <span class="key">5822</span> 입니다. 바꾸고 싶으시면 말씀해 주세요.</p>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  /* 어디까지 하셨는지 기억해 둡니다. 하루에 다 못 하셔도 이어서 하실 수 있게. */
+  var KEY = 'antena_guide_progress_v1';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch(e){ saved = {}; }
+
+  var boxes = document.querySelectorAll('.check input[data-step]');
+  boxes.forEach(function(b){
+    var n = b.dataset.step;
+    if (saved[n]) { b.checked = true; }
+    sync(b);
+    b.addEventListener('change', function(){
+      saved[n] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e){}
+      sync(b);
+    });
+  });
+  function sync(b){
+    var step = b.closest('.step');
+    if (step) step.setAttribute('data-done', b.checked ? '1' : '0');
+  }
+
+  var btn = document.getElementById('copyBtn');
+  var pre = document.getElementById('codeText');
+  if (btn && pre){
+    btn.addEventListener('click', function(){
+      var text = pre.textContent;
+      function ok(){ btn.textContent = '복사했습니다'; setTimeout(function(){ btn.textContent = '코드 복사'; }, 1800); }
+      function no(){ btn.textContent = '아래 글을 직접 긁어서 복사해 주세요'; setTimeout(function(){ btn.textContent = '코드 복사'; }, 2600); }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(ok).catch(fallback);
+      } else { fallback(); }
+      function fallback(){
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+          document.body.appendChild(ta); ta.select();
+          var done = document.execCommand('copy');
+          document.body.removeChild(ta);
+          done ? ok() : no();
+        } catch(e){ no(); }
+      }
+    });
+  }
+})();
+</script>

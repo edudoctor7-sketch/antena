@@ -1,0 +1,362 @@
+<meta charset="utf-8">
+<title>안테나랩 깃허브 연결</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --paper:#FAFBFC; --card:#FFFFFF; --sunk:#F1F4F7;
+  --ink:#16283A; --ink-2:#4A5B6C; --ink-3:#5E6F84;
+  --navy:#1B3A5C; --teal:#0A7276; --teal-soft:#E4F3F3;
+  --warn:#A8501C; --warn-soft:#FBF0E7;
+  --line:#DCE3EA; --line-2:#EDF1F5;
+  --shadow:0 1px 2px rgba(22,40,58,.05), 0 8px 24px -12px rgba(22,40,58,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1720; --card:#17212C; --sunk:#1E2A37;
+    --ink:#E7EDF3; --ink-2:#B3C1CF; --ink-3:#9AACBE;
+    --navy:#9BBEE0; --teal:#3FC4C7; --teal-soft:#12333A;
+    --warn:#E9A272; --warn-soft:#33241A;
+    --line:#2B3947; --line-2:#222E3A;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1720; --card:#17212C; --sunk:#1E2A37;
+  --ink:#E7EDF3; --ink-2:#B3C1CF; --ink-3:#9AACBE;
+  --navy:#9BBEE0; --teal:#3FC4C7; --teal-soft:#12333A;
+  --warn:#E9A272; --warn-soft:#33241A;
+  --line:#2B3947; --line-2:#222E3A;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  font-weight:400;line-height:1.78;letter-spacing:-.01em;
+  word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 96px}
+.top{border-bottom:1px solid var(--line);background:var(--card);margin-bottom:40px}
+.top-in{max-width:760px;margin:0 auto;padding:44px 20px 36px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.16em;color:var(--teal);text-transform:uppercase;margin:0 0 14px}
+h1{font-family:"Gowun Batang","Apple SD Gothic Neo",serif;font-size:clamp(29px,6vw,42px);
+   font-weight:700;line-height:1.3;letter-spacing:-.03em;margin:0 0 16px;text-wrap:balance}
+.sub{font-size:16.5px;color:var(--ink-2);margin:0;max-width:56ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.chip{font-size:13px;font-weight:500;padding:6px 13px;border-radius:999px;background:var(--sunk);color:var(--ink-2);border:1px solid var(--line-2)}
+.chip.on{background:var(--teal-soft);color:var(--teal);border-color:transparent;font-weight:600}
+h2{font-family:"Gowun Batang","Apple SD Gothic Neo",serif;font-size:24px;font-weight:700;
+   letter-spacing:-.03em;line-height:1.4;margin:0 0 12px;text-wrap:balance}
+h3{font-size:16.5px;font-weight:600;margin:0 0 8px;letter-spacing:-.02em}
+p{margin:0 0 14px} p:last-child{margin-bottom:0}
+b,strong{font-weight:600}
+.hl{color:var(--teal);font-weight:600}
+.note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;box-shadow:var(--shadow);margin-bottom:22px}
+.note.warn{background:var(--warn-soft);border-color:transparent}
+.note.warn h3{color:var(--warn)}
+.note-tag{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--warn);margin-bottom:8px}
+.steps{display:flex;flex-direction:column;gap:18px;margin:0;padding:0;list-style:none}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.step-head{display:flex;gap:16px;align-items:flex-start;padding:22px 24px 0}
+.num{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--card);
+     display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;
+     font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;margin-top:2px}
+.step[data-done="1"] .num{background:var(--teal)}
+.step[data-done="1"] .num::after{content:'✓';font-size:17px}
+.step[data-done="1"] .num span{display:none}
+.step-title{flex:1;min-width:0}
+.step-title h2{margin-bottom:4px}
+.step-why{font-size:14px;color:var(--ink-3);margin:0}
+.step-body{padding:16px 24px 24px 76px}
+@media (max-width:560px){.step-body{padding-left:24px}}
+ol.do{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+ol.do>li{padding-left:4px}
+.key{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:13.5px;background:var(--sunk);
+     border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-weight:500;white-space:nowrap}
+.key.teal{background:var(--teal-soft);border-color:transparent;color:var(--teal)}
+.key.url{white-space:normal;overflow-wrap:anywhere;font-size:12.5px;line-height:1.5}
+.shot{margin:18px 0 4px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--sunk)}
+.shot-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:var(--card);border-bottom:1px solid var(--line)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.shot-name{font-size:11.5px;color:var(--ink-3);margin-left:8px;font-family:"IBM Plex Mono",monospace}
+.shot-in{padding:16px;font-size:13.5px;line-height:1.6}
+.field{margin-bottom:12px}
+.field:last-child{margin-bottom:0}
+.field-l{font-size:12px;color:var(--ink-3);margin-bottom:5px;font-weight:500}
+.field-v{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:9px 12px;font-size:13.5px;color:var(--ink-2)}
+.field-v.pick{border-color:var(--teal);border-width:2px;color:var(--teal);font-weight:600;background:var(--teal-soft)}
+.tree{font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.9;color:var(--ink-2);margin:0}
+.tree b{color:var(--teal)}
+.tree i{color:var(--ink-3);font-style:normal}
+.tag-must{display:inline-block;font-size:11px;font-weight:600;color:var(--card);background:var(--teal);
+          border-radius:4px;padding:1px 7px;margin-left:6px;letter-spacing:.02em;vertical-align:2px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:440px;color:var(--ink)}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-2);vertical-align:top}
+th{font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:none}
+.check{display:flex;align-items:flex-start;gap:11px;margin-top:18px;padding-top:16px;
+       border-top:1px solid var(--line-2);cursor:pointer;user-select:none}
+.check input{width:19px;height:19px;margin:3px 0 0;accent-color:var(--teal);cursor:pointer;flex:0 0 auto}
+.check span{font-size:14.5px;color:var(--ink-2);font-weight:500}
+.step[data-done="1"] .check span{color:var(--teal)}
+.finish{background:var(--navy);color:#fff;border-radius:14px;padding:30px 28px;margin-top:26px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .finish{background:#1E3550;color:#EAF1F8}}
+:root[data-theme="dark"] .finish{background:#1E3550;color:#EAF1F8}
+.finish h2{color:inherit;margin-bottom:10px}
+.finish p{color:inherit;opacity:.9;font-size:15px}
+.flow{display:grid;gap:12px;margin-top:20px}
+.flow-item{background:rgba(255,255,255,.09);border-radius:10px;padding:14px 18px;font-size:14.5px}
+.flow-item b{color:#fff}
+section{margin-top:44px}
+.sec-head{margin-bottom:16px}
+.sec-head p{color:var(--ink-2);font-size:15px;margin-top:6px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <p class="eyebrow">안테나랩 · antena.kr</p>
+    <h1>깃허브 연결하기</h1>
+    <p class="sub">홈페이지 파일을 대표님 깃허브에 두고, 파일이 바뀌면 넷리파이가 알아서 홈페이지를 새로 올리도록 만듭니다.</p>
+    <div class="meta">
+      <span class="chip on">약 15분</span>
+      <span class="chip">한 번만 하면 끝</span>
+      <span class="chip">컴퓨터로 하세요</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note">
+    <h3>왜 하나요</h3>
+    <p>지금은 홈페이지 글씨 하나를 고쳐도 <b>파일을 통째로 받아 넷리파이에 다시 올려야</b> 합니다. 번거롭고, 잘못 올리면 되돌리기도 어렵습니다.</p>
+    <p>깃허브에 두면 <b>파일 하나만 바꿔도 30초 뒤 홈페이지에 반영</b>되고, 잘못됐을 때 예전 것으로 되돌리기도 쉽습니다.</p>
+    <p style="margin-top:12px;color:var(--ink-3);font-size:14.5px"><b>도메인(antena.kr)과 지금 홈페이지는 그대로입니다.</b> 넷리파이 계정도 대표님 것 그대로 쓰고, 후기 접수함도 유지됩니다. 주소가 바뀌거나 홈페이지가 잠시 멈추는 일은 없습니다.</p>
+  </div>
+
+  <div class="note warn">
+    <span class="note-tag">준비물</span>
+    <h3>시작하기 전에</h3>
+    <p>① <b>깃허브(github.com)</b> 로그인 — 대표님 계정<br>
+       ② <b>넷리파이(app.netlify.com)</b> 로그인 — antena.kr 이 올라가 있는 대표님 계정<br>
+       ③ 카톡으로 받으신 <b>「깃허브에_올릴_파일.zip」</b> — 압축을 미리 풀어 두세요</p>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>순서</h2>
+      <p>네 단계입니다. 체크는 저장되니 중간에 쉬셨다가 이어서 하셔도 됩니다.</p>
+    </div>
+
+    <ol class="steps">
+
+      <li class="step" id="s1">
+        <div class="step-head">
+          <div class="num"><span>1</span></div>
+          <div class="step-title">
+            <h2>저장소 만들기</h2>
+            <p class="step-why">홈페이지 파일이 살 집을 하나 만듭니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li><span class="key">github.com</span> 에 대표님 계정으로 로그인합니다.</li>
+            <li>오른쪽 위 <b>＋</b> → <b>New repository</b> 를 누릅니다.</li>
+            <li>아래처럼 채웁니다.</li>
+          </ol>
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">Create a new repository</span></div>
+            <div class="shot-in">
+              <div class="field">
+                <div class="field-l">Repository name</div>
+                <div class="field-v pick">antenalab-site</div>
+              </div>
+              <div class="field">
+                <div class="field-l">공개 범위</div>
+                <div class="field-v pick">Private ← 비공개로 해주세요</div>
+              </div>
+              <div class="field">
+                <div class="field-l">Initialize this repository with…</div>
+                <div class="field-v">아무것도 체크하지 않습니다 (README 포함 안 함)</div>
+              </div>
+            </div>
+          </div>
+          <ol class="do" start="4" style="margin-top:16px">
+            <li>맨 아래 <b>Create repository</b> 를 누릅니다.</li>
+          </ol>
+          <label class="check"><input type="checkbox" data-step="1"><span>저장소를 만들었습니다</span></label>
+        </div>
+      </li>
+
+      <li class="step" id="s2">
+        <div class="step-head">
+          <div class="num"><span>2</span></div>
+          <div class="step-title">
+            <h2>파일 올리기</h2>
+            <p class="step-why">압축을 푼 폴더 안의 것들을 그대로 끌어다 놓습니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li>저장소 첫 화면의 <b>uploading an existing file</b> 글씨를 누릅니다.<br>
+              <span style="color:var(--ink-3);font-size:14px">(안 보이면 <b>Add file → Upload files</b>)</span></li>
+            <li>압축을 푼 폴더를 열고, <b>그 안의 파일과 폴더를 전부 선택해</b> 화면에 끌어다 놓습니다.<br>
+              <span style="color:var(--ink-3);font-size:14px">폴더 자체가 아니라 <b>안에 있는 것들</b>을 올리셔야 합니다.</span></li>
+            <li>아래로 내려가 <b>Commit changes</b> 를 누릅니다.</li>
+          </ol>
+          <p style="margin-top:16px;margin-bottom:8px"><b>다 올리면 이런 모양이어야 합니다.</b></p>
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">antenalab-site</span></div>
+            <div class="shot-in">
+              <p class="tree">
+                📁 <b>docs</b>&nbsp;&nbsp;<i>— 설명서·구글시트 코드 (홈페이지엔 안 올라감)</i><br>
+                📁 <b>site</b>&nbsp;&nbsp;<i>— 홈페이지 본체 (index.html)</i><br>
+                📄 .gitignore<br>
+                📄 README.md&nbsp;&nbsp;<i>— 사용법 설명</i><br>
+                📄 <b>netlify.toml</b>&nbsp;&nbsp;<i>— 넷리파이에게 알려주는 설정</i>
+              </p>
+            </div>
+          </div>
+          <label class="check"><input type="checkbox" data-step="2"><span>파일을 다 올렸습니다</span></label>
+        </div>
+      </li>
+
+      <li class="step" id="s3">
+        <div class="step-head">
+          <div class="num"><span>3</span></div>
+          <div class="step-title">
+            <h2>넷리파이와 잇기<span class="tag-must">핵심</span></h2>
+            <p class="step-why">지금 쓰시는 홈페이지에 그대로 연결합니다. 새로 만드는 게 아닙니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <ol class="do">
+            <li><span class="key">app.netlify.com</span> 에 로그인하고 <b>antena.kr 사이트</b>를 누릅니다.<br>
+              <span style="color:var(--ink-3);font-size:14px">새 사이트를 만들지 마세요. <b>지금 쓰고 있는 사이트</b>를 골라야 도메인이 유지됩니다.</span></li>
+            <li>왼쪽 <b>Site configuration</b> → <b>Build &amp; deploy</b> 로 들어갑니다.</li>
+            <li><b>Continuous deployment</b> 칸에서 <b>Link repository</b> 를 누릅니다.</li>
+            <li><b>GitHub</b> 를 고르고, 권한을 묻거든 허용한 뒤 <b>antenalab-site</b> 를 고릅니다.</li>
+            <li>설정 화면이 나오면 아래처럼 되어 있는지 봅니다.</li>
+          </ol>
+          <div class="shot">
+            <div class="shot-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="shot-name">Build settings</span></div>
+            <div class="shot-in">
+              <div class="field">
+                <div class="field-l">Branch to deploy</div>
+                <div class="field-v">main</div>
+              </div>
+              <div class="field">
+                <div class="field-l">Build command</div>
+                <div class="field-v">비워 둡니다</div>
+              </div>
+              <div class="field">
+                <div class="field-l">Publish directory</div>
+                <div class="field-v pick">site</div>
+              </div>
+            </div>
+          </div>
+          <p style="margin-top:14px;color:var(--ink-3);font-size:14.5px">올려둔 <span class="key">netlify.toml</span> 덕분에 <b>Publish directory 가 자동으로 <span class="key teal">site</span> 로 잡힐 수 있습니다.</b> 그러면 그대로 두시면 됩니다.</p>
+          <ol class="do" start="6" style="margin-top:16px">
+            <li><b>Deploy site</b> (또는 Save) 를 누릅니다.</li>
+            <li><b>Deploys</b> 화면에서 초록색 <b>Published</b> 가 뜰 때까지 기다립니다. 보통 30초입니다.</li>
+            <li><span class="key">antena.kr</span> 에 들어가 홈페이지가 평소처럼 잘 나오는지 확인합니다.</li>
+          </ol>
+          <label class="check"><input type="checkbox" data-step="3"><span>연결하고 홈페이지가 잘 나오는 걸 확인했습니다</span></label>
+        </div>
+      </li>
+
+      <li class="step" id="s4">
+        <div class="step-head">
+          <div class="num"><span>4</span></div>
+          <div class="step-title">
+            <h2>제작자를 참여자로 넣기</h2>
+            <p class="step-why">이걸 해두시면 앞으로 고칠 일이 있을 때 대표님이 아무것도 안 하셔도 됩니다.</p>
+          </div>
+        </div>
+        <div class="step-body">
+          <p>저장소는 <b>대표님 것</b>이고, 제작자에게 <b>파일을 고칠 권한만</b> 드리는 것입니다. 언제든 다시 빼실 수 있습니다.</p>
+          <ol class="do" style="margin-top:14px">
+            <li>저장소 화면 위쪽 <b>Settings</b> 를 누릅니다.</li>
+            <li>왼쪽 <b>Collaborators</b> → <b>Add people</b>.</li>
+            <li>제작자 깃허브 아이디 <span class="key teal">parkjiwoon-writer</span> 를 넣고 초대합니다.</li>
+          </ol>
+          <p style="margin-top:16px;color:var(--ink-3);font-size:14.5px">이걸 건너뛰셔도 됩니다. 대신 고칠 때마다 파일을 받아 <b>2단계처럼 직접 올리셔야</b> 합니다.</p>
+          <label class="check"><input type="checkbox" data-step="4"><span>초대했습니다 (또는 건너뜁니다)</span></label>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <div class="finish">
+    <h2>이제부터는 이렇게 됩니다</h2>
+    <p>고칠 일이 생기면 아래 흐름으로 저절로 반영됩니다.</p>
+    <div class="flow">
+      <div class="flow-item"><b>1.</b> 제작자가 깃허브의 파일을 고칩니다</div>
+      <div class="flow-item"><b>2.</b> 넷리파이가 그걸 보고 홈페이지를 새로 올립니다 <span style="opacity:.7">(약 30초)</span></div>
+      <div class="flow-item"><b>3.</b> antena.kr 에 반영됩니다 — <b>대표님은 하실 일이 없습니다</b></div>
+    </div>
+    <p style="margin-top:20px;font-size:14.5px;opacity:.85">홈페이지 <b>글자·후기·사진</b>을 직접 고치시는 것은 지금처럼 <b>관리자 페이지(비밀번호 5822)</b>에서 하시면 됩니다. 그건 깃허브와 상관없이 따로 돌아갑니다.</p>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>막혔을 때</h2>
+    </div>
+    <div class="note" style="padding:8px 4px">
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>이런 증상</th><th>이렇게 하세요</th></tr>
+          <tr>
+            <td>연결했더니 홈페이지가 <b>빈 화면</b>이거나 「Page not found」</td>
+            <td><b>Publish directory</b> 가 <span class="key">site</span> 로 되어 있는지 확인해 주세요. 비어 있거나 다른 값이면 그렇습니다. Site configuration → Build &amp; deploy 에서 고칠 수 있습니다.</td>
+          </tr>
+          <tr>
+            <td>저장소에 <b>site 폴더가 안 보임</b></td>
+            <td>압축 푼 <b>폴더 자체</b>를 올리신 경우입니다. 올라간 것을 지우고, 폴더 <b>안에 있는 것들</b>을 다시 올려 주세요.</td>
+          </tr>
+          <tr>
+            <td>Deploys 에 <b>Failed</b> 가 뜸</td>
+            <td>Failed 를 눌러 기록을 보시고, 그 화면을 캡처해 제작자에게 보내주세요.</td>
+          </tr>
+          <tr>
+            <td>도메인이 사라질까 걱정됨</td>
+            <td><b>기존 사이트에 저장소를 잇는 것</b>이라 도메인 설정은 건드리지 않습니다. 그래도 불안하시면 3단계 전에 Domain management 화면을 캡처해 두세요.</td>
+          </tr>
+          <tr>
+            <td>되돌리고 싶음</td>
+            <td>넷리파이 <b>Deploys</b> 에서 예전 배포를 고르고 <b>Publish deploy</b> 를 누르면 그때로 돌아갑니다.</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var KEY = 'antena_github_guide_v1';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch(e){ saved = {}; }
+  document.querySelectorAll('.check input[data-step]').forEach(function(b){
+    var n = b.dataset.step;
+    if (saved[n]) b.checked = true;
+    sync(b);
+    b.addEventListener('change', function(){
+      saved[n] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e){}
+      sync(b);
+    });
+  });
+  function sync(b){
+    var s = b.closest('.step');
+    if (s) s.setAttribute('data-done', b.checked ? '1' : '0');
+  }
+})();
+</script>

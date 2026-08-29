@@ -1,0 +1,17 @@
+# 넷리파이가 이 파일을 보고 무엇을 어디서 올릴지 정합니다.
+#
+#   publish = "site"  →  site 폴더 안의 것만 인터넷에 올라갑니다.
+#                        docs 폴더(설명서·구글시트 코드)는 올라가지 않습니다.
+#
+# 만들어 두는 프로그램이 따로 없는 정적 사이트라 build 명령은 없습니다.
+# 주소를 갈아끼우는 redirect 는 일부러 넣지 않았습니다 —
+# 후기·문의 접수(Netlify Forms)가 방해받는 일이 있어서입니다.
+
+[build]
+  publish = "site"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
