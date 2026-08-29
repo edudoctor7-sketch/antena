@@ -1267,6 +1267,9 @@
           <button type="button" class="rv-write-btn" onclick="AL.openReview()">후기 남기기</button>
         </div>
         <div class="rv-grid" id="rvGrid"></div>
+        <div style="text-align:center;margin-top:18px">
+          <button type="button" class="rv-all-btn" onclick="AL.openAllReviews()">후기 전체 보기</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1612,6 +1615,8 @@ window.applySiteText();
 .rv-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
 .rv-write-btn{border:1px solid var(--line);background:#fff;color:var(--navy);font-size:13px;font-weight:600;letter-spacing:-.02em;padding:9px 18px;border-radius:999px;cursor:pointer;font-family:inherit;transition:.2s}
 .rv-write-btn:hover{border-color:var(--teal);color:var(--teal)}
+.rv-all-btn{border:none;background:transparent;color:var(--gray);font-size:13px;font-weight:600;letter-spacing:-.01em;padding:8px 4px;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:4px;transition:.2s}
+.rv-all-btn:hover{color:var(--teal)}
 .rv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .rv-card{border:1px solid var(--line);border-radius:14px;padding:26px 24px;background:#fff;display:flex;flex-direction:column;transition:.25s}
 .rv-card:hover{border-color:var(--teal);box-shadow:0 6px 24px rgba(27,58,92,.07)}
@@ -1773,6 +1778,16 @@ window.applySiteText();
 </div>
 
 <!-- ══ 관리자 로그인 ══ -->
+<!-- ══ 후기 전체 보기 (방문자용) ══ -->
+<div class="al-modal" id="rvAllModal" onclick="if(event.target===this)AL.closeAllReviews()">
+  <div class="al-box wide">
+    <button class="al-x" onclick="AL.closeAllReviews()" aria-label="닫기">✕</button>
+    <h3 class="al-title">참여자 후기 전체</h3>
+    <p class="al-sub">지금까지 등록된 모든 후기입니다.</p>
+    <div class="rv-grid" id="rvAllGrid" style="margin-top:18px"></div>
+  </div>
+</div>
+
 <div class="al-modal" id="adLogin" onclick="if(event.target===this)AL.closeLogin()">
   <div class="al-box" style="max-width:400px">
     <button class="al-x" onclick="AL.closeLogin()" aria-label="닫기">✕</button>
@@ -2185,6 +2200,24 @@ window.AL = (function(){
 
   /* ── 방문자 후기 ───────────────────────────── */
   function openReview(){ document.getElementById('rvModal').classList.add('on'); document.body.style.overflow='hidden'; }
+  function openAllReviews(){
+    renderAllReviews();
+    document.getElementById('rvAllModal').classList.add('on'); document.body.style.overflow='hidden';
+  }
+  function closeAllReviews(){ document.getElementById('rvAllModal').classList.remove('on'); document.body.style.overflow=''; }
+  function renderAllReviews(){
+    var g = document.getElementById('rvAllGrid'); if (!g) return;
+    var list = D.reviews.filter(function(r){ return r.pub !== false; });
+    g.innerHTML = list.length ? list.map(function(r){
+      return '<article class="rv-card">'
+        + '<div class="rv-stars">' + stars(r.star) + '</div>'
+        + '<p>' + esc(r.text) + '</p>'
+        + '<div class="rv-meta"><span><b>' + esc(r.name || '익명') + '</b>'
+        + (r.role ? ' · ' + esc(r.role) : '') + '</span><span>' + esc(r.date || '') + '</span></div>'
+        + '</article>';
+    }).join('') : '<div class="rv-empty">등록된 후기가 아직 없습니다.</div>';
+  }
+
   function closeReview(){ document.getElementById('rvModal').classList.remove('on'); document.body.style.overflow=''; }
   function submitReview(){
     var v = function(id){ return (document.getElementById(id).value || '').trim(); };
@@ -2660,6 +2693,7 @@ window.AL = (function(){
       if (!edited){
         D.reviews = list.length ? list : D.reviews;
         renderMain();
+        if (document.getElementById('rvAllModal') && document.getElementById('rvAllModal').classList.contains('on')) renderAllReviews();
       }
     });
 
@@ -2713,7 +2747,7 @@ window.AL = (function(){
     });
     document.addEventListener('keydown', function(e){
       if (e.key !== 'Escape') return;
-      ['rvModal','adLogin','adPanel'].forEach(function(id){
+      ['rvModal','rvAllModal','adLogin','adPanel'].forEach(function(id){
         var m = document.getElementById(id);
         if (m && m.classList.contains('on')){ m.classList.remove('on'); document.body.style.overflow=''; }
       });
@@ -2721,7 +2755,8 @@ window.AL = (function(){
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
-  return {saveSheetUrl:saveSheetUrl, testSheet:testSheet, publishToWeb:publishToWeb,
+  return {openAllReviews:openAllReviews, closeAllReviews:closeAllReviews,
+    saveSheetUrl:saveSheetUrl, testSheet:testSheet, publishToWeb:publishToWeb,
     keepInquiry: function(f){ return netlifyPost('강의문의', f); },
     buildTextForm:buildTextForm, saveText:saveText, resetText:resetText,
     reloadTextForm:reloadTextForm,
