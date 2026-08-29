@@ -1926,8 +1926,8 @@ window.applySiteText();
 
           <div class="ad-card">
             <div class="ad-sec-t">② 웹에 반영하기 <span style="color:var(--teal)">← 평소엔 이것만</span></div>
-            <p class="ad-step">글자를 고치거나 후기를 정리하신 뒤 이 버튼을 누르면,<br>
-              <b>인터넷에 있는 홈페이지에도 똑같이 반영</b>됩니다. (구글시트 연결이 끝나 있어야 합니다)</p>
+            <p class="ad-step">글자를 고치신 뒤 이 버튼을 누르면,<br>
+              <b>인터넷에 있는 홈페이지에도 똑같이 반영</b>됩니다. (1분 정도 걸립니다)</p>
             <button class="al-btn teal" onclick="AL.publishToWeb()">웹에 반영하기</button>
             <p class="al-msg" id="ad_pub_msg"></p>
           </div>
@@ -2458,17 +2458,20 @@ window.AL = (function(){
       });
   }
   function publishToWeb(){
-    if (!sheetUrl()){ msg('ad_pub_msg','먼저 위 ①에서 구글시트를 연결해 주세요.', false); return; }
     var content = {};
     try { content = JSON.parse(localStorage.getItem(TXT_KEY) || '{}'); } catch(e){}
-    content.sheet_url = sheetUrl();
     msg('ad_pub_msg','반영하는 중입니다…', true);
-    sheetPost({type:'publish', pw: PW, content: content, reviews: D.reviews})
+    fetch('/.netlify/functions/publish', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({pin: PW, text: content})
+    })
+      .then(function(r){ return r.json(); })
       .then(function(r){
-        if (r && r.ok) msg('ad_pub_msg','반영했습니다! 이제 다른 분들 화면에도 똑같이 보입니다. (새로고침 후 확인)', true);
+        if (r && r.ok) msg('ad_pub_msg','반영했습니다! 이제 다른 분들 화면에도 똑같이 보입니다. (1분 정도 뒤 새로고침 후 확인)', true);
         else msg('ad_pub_msg','반영하지 못했습니다: ' + ((r && r.error) || '알 수 없는 오류'), false);
       })
-      .catch(function(e){ msg('ad_pub_msg','반영하지 못했습니다. 인터넷 연결과 시트 주소를 확인해 주세요.', false); });
+      .catch(function(e){ msg('ad_pub_msg','반영하지 못했습니다. 인터넷 연결을 확인해 주세요.', false); });
   }
 
   /* ── 관리자 ───────────────────────────── */
