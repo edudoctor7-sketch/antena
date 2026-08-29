@@ -1279,11 +1279,12 @@
 <!-- 활동소식 + 컬러강점 진단 -->
 <section class="sec" style="padding:60px 0">
   <div class="wrap">
+    <!-- 제목은 두 칸 위에 둔다. 그래야 사진과 오른쪽 카드가 같은 선에서 시작해 높이가 맞는다. -->
+    <p style="font-size:15.5px;font-weight:600;letter-spacing:.12em;color:var(--teal);text-transform:uppercase;margin-bottom:16px">Activity</p>
+    <h2 style="font-size:clamp(25px,2.8vw,31px);font-weight:600;letter-spacing:-.04em;color:var(--ink);line-height:1.4;margin-bottom:24px">활동 소식</h2>
     <div class="act-cols">
       <!-- 활동소식 -->
       <div class="act-col">
-        <p style="font-size:15.5px;font-weight:600;letter-spacing:.12em;color:var(--teal);text-transform:uppercase;margin-bottom:16px">Activity</p>
-        <h2 style="font-size:clamp(25px,2.8vw,31px);font-weight:600;letter-spacing:-.04em;color:var(--ink);line-height:1.4;margin-bottom:20px">활동 소식</h2>
         <div class="act-grid" id="actGallery"></div>
       </div>
       <!-- 컬러강점 진단 -->
@@ -1639,8 +1640,15 @@ window.applySiteText();
 /* 활동소식 칸과 옆의 진단 칸이 같은 높이로 떨어지게 */
 .act-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
 .act-col{display:flex;flex-direction:column}
-.act-col .act-grid{flex:1;align-content:start}
-@media (max-width:860px){.act-cols{grid-template-columns:1fr}}
+/* 사진 칸이 옆 카드와 위·아래가 딱 맞도록 남는 높이를 사진들이 나눠 갖는다. */
+.act-col .act-grid{flex:1;align-content:stretch;grid-auto-rows:1fr}
+.act-col .act-grid figure{aspect-ratio:auto;height:100%}
+@media (max-width:860px){
+  .act-cols{grid-template-columns:1fr}
+  /* 세로로 쌓이면 맞출 카드가 옆에 없으니 원래 비율로 되돌린다. */
+  .act-col .act-grid{align-content:start;grid-auto-rows:auto}
+  .act-col .act-grid figure{aspect-ratio:4/3;height:auto}
+}
 
 /* ── 문의 폼 하단: 전화·문자·메일 대체 연결 ───────────────── */
 .send-alt{margin-top:26px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);text-align:center}
