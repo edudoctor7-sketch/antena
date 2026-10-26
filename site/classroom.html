@@ -99,7 +99,7 @@ form.addEventListener("submit",async function(e){e.preventDefault();msg.textCont
   try{var K=await unwrap(v,k.day);try{sessionStorage.setItem("antena_class_k",JSON.stringify({d:k.str,k:u2b(K)}))}catch(e){}await open(K)}
   catch(err){fail("비밀번호가 맞지 않아요. 다시 확인해 주세요.")}});
 (async function(){try{var s=JSON.parse(sessionStorage.getItem("antena_class_k")||"null");
-  if(s&&s.d===kst().str){await open(b2u(s.k))}}catch(e){}})();
+  if(s&&0){await open(b2u(s.k))}}catch(e){}})();
 if(!window.crypto||!crypto.subtle){msg.textContent="이 브라우저에서는 열 수 없어요. 크롬 또는 사파리 최신 버전으로 접속해 주세요."}
 })();
 </script>
