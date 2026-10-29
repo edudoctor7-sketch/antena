@@ -707,6 +707,7 @@
   ]
 }
 </script>
+<link rel="preload" as="image" href="/popup-class.jpg" fetchpriority="high">
 </head>
 <body>
 
@@ -3122,8 +3123,8 @@ img,svg,video,iframe,table{max-width:100%}
 </style>
 <div id="cls-pop" role="dialog" aria-modal="true" aria-label="AI 홈페이지 만들기 특별과정 안내">
  <div class="box">
-  <a class="img" href="https://forms.gle/c5iVFnXMKXcq7HJd8" target="_blank" rel="noopener" aria-label="AI 홈페이지 만들기 특별과정 신청서 열기"><img src="/popup-class.jpg" width="720" height="900" alt="AI로 내 홈페이지 만들기 1일 특별과정 안내 - 11월 21일 토요일, 부산, 선착순 4명" decoding="async"></a>
-  <a class="cta" href="https://forms.gle/c5iVFnXMKXcq7HJd8" target="_blank" rel="noopener" aria-label="무료 상담 신청, 신청서 열기">무료 상담 신청<small>부담 없이 상담만 받아보세요.</small></a>
+  <a class="img" href="https://forms.gle/c5iVFnXMKXcq7HJd8" target="_blank" rel="noopener" aria-label="AI 홈페이지 만들기 특별과정 신청서 열기"><img src="/popup-class.jpg" width="720" height="900" alt="AI로 내 홈페이지 만들기 1일 특별과정 안내 - 11월 21일 토요일, 부산, 선착순 4명" fetchpriority="high" decoding="async"></a>
+  <a class="cta" href="https://forms.gle/c5iVFnXMKXcq7HJd8" target="_blank" rel="noopener" aria-label="과정 신청, 신청서 열기">과정 신청<small>선착순 4명 · 신청서를 쓰면 결제 방법을 안내해 드려요</small></a>
   <div class="bar"><button type="button" id="cls-pop-today" aria-label="오늘 하루 이 창 보지 않기">오늘 하루 보지 않기</button><button type="button" id="cls-pop-close" aria-label="팝업 닫기">닫기 ✕</button></div>
  </div>
 </div>
@@ -3138,7 +3139,7 @@ img,svg,video,iframe,table{max-width:100%}
  document.getElementById('cls-pop-today').addEventListener('click',function(){try{localStorage.setItem(K,today)}catch(e){};hide()});
  p.addEventListener('click',function(e){if(e.target===p)hide()});
  document.addEventListener('keydown',function(e){if(e.key==='Escape')hide()});
- if(!hidden()) setTimeout(show,1200);
+ if(!hidden()){var im=p.querySelector('img'),done=false;function go(){if(done)return;done=true;show()}if(im.complete&&im.naturalWidth)go();else{im.addEventListener('load',go);setTimeout(go,900)}}
 })();
 </script>
 </body>
