@@ -3102,5 +3102,42 @@ img,svg,video,iframe,table{max-width:100%}
   .ad-side{grid-template-columns:1fr}
   .ad-side .tx i{display:block}
 }
-</style></body>
+</style>
+<!-- 팝업: 이달의 특별과정 (구글폼 연결) / 교체 필요 : 과정 종료 후 이미지·링크 교체 -->
+<style>
+#cls-pop{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;background:rgba(18,41,63,.72);padding:16px}
+#cls-pop.on{display:flex;animation:clsFade .35s ease}
+@keyframes clsFade{from{opacity:0}to{opacity:1}}
+#cls-pop .box{position:relative;width:min(420px,92vw);max-height:92vh;display:flex;flex-direction:column;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+#cls-pop a.img{display:block;line-height:0;overflow:auto}
+#cls-pop img{width:100%;height:auto;display:block}
+#cls-pop .cta{display:block;text-align:center;background:#0F8B8D;color:#fff;text-decoration:none;font-weight:800;font-size:19px;padding:14px 10px 12px;line-height:1.3}
+#cls-pop .cta small{display:block;font-weight:500;font-size:13px;opacity:.9;margin-top:2px}
+#cls-pop .cta:hover{background:#14A8AA}
+#cls-pop .bar{display:flex;justify-content:space-between;background:#12293F}
+#cls-pop .bar button{flex:1;background:none;border:0;color:#fff;font-size:14px;padding:12px 8px;cursor:pointer;font-family:inherit}
+#cls-pop .bar button:hover{background:#1B3A5C}
+</style>
+<div id="cls-pop" role="dialog" aria-modal="true" aria-label="AI 홈페이지 만들기 특별과정 안내">
+ <div class="box">
+  <a class="img" href="https://forms.gle/c5iVFnXMKXcq7HJd8" target="_blank" rel="noopener" aria-label="AI 홈페이지 만들기 특별과정 신청서 열기"><img src="/popup-class.jpg" width="720" height="900" alt="AI로 내 홈페이지 만들기 1일 특별과정 안내 - 11월 21일 토요일, 부산, 선착순 4명" decoding="async"></a>
+  <a class="cta" href="https://forms.gle/c5iVFnXMKXcq7HJd8" target="_blank" rel="noopener" aria-label="무료 상담 신청, 신청서 열기">무료 상담 신청<small>부담 없이 상담만 받아보세요.</small></a>
+  <div class="bar"><button type="button" id="cls-pop-today" aria-label="오늘 하루 이 창 보지 않기">오늘 하루 보지 않기</button><button type="button" id="cls-pop-close" aria-label="팝업 닫기">닫기 ✕</button></div>
+ </div>
+</div>
+<script>
+(function(){
+ var p=document.getElementById('cls-pop'); if(!p) return;
+ var K='clsPopHide', today=new Date().toISOString().slice(0,10);
+ function hidden(){try{return localStorage.getItem(K)===today}catch(e){return false}}
+ function show(){p.classList.add('on');document.getElementById('cls-pop-close').focus()}
+ function hide(){p.classList.remove('on')}
+ document.getElementById('cls-pop-close').addEventListener('click',hide);
+ document.getElementById('cls-pop-today').addEventListener('click',function(){try{localStorage.setItem(K,today)}catch(e){};hide()});
+ p.addEventListener('click',function(e){if(e.target===p)hide()});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')hide()});
+ if(!hidden()) setTimeout(show,1200);
+})();
+</script>
+</body>
 </html>
